@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BarraDeProgresoService} from 'src/app/_service/barra-de-progreso.service'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angularConServicios';
+
+  public flagProgressBar: boolean = true;
+  constructor(private barraDeProgresoService: BarraDeProgresoService){}
+
+  ngOnInit(): void {
+
+      this.barraDeProgresoService.progressBarReactiva.subscribe(data =>{
+          //this.flagProgressBar = data;  
+          this.flagProgressBar = !this.flagProgressBar;
+      });
+  
+  }
 }

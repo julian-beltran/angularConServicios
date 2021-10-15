@@ -1,0 +1,65 @@
+
+    <form [formGroup]="Vehform" #formVehiculo="ngForm" (ngSubmit)="guardar()" class="container">
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Placa</mat-label>
+            <input matInput placeholder="Placa" formControlName="placa" maxlength="7" oninput="this.value = this.value.toUpperCase()"/>
+            <mat-error *ngIf="placa.invalid && placa.errors.required" placeholder="Placa">Placa requerida</mat-error>
+            <mat-error *ngIf="placa.invalid && placa.errors.pattern">Placa invalida</mat-error>
+        </mat-form-field>
+        <br>
+
+
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Modelo</mat-label>
+            <input matInput placeholder="Modelo" formControlName="modelo" type="number"/>
+            <mat-error *ngIf="modelo.invalid && modelo.errors.required">Modelo requerido</mat-error>
+            <mat-error *ngIf="modelo.invalid && modelo.errors.min">Debe ser mayor a 1900</mat-error>
+            <mat-error *ngIf="modelo.invalid && modelo.errors.max">Debe ser menor a 2022</mat-error>
+        </mat-form-field>
+        <br>
+
+
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Marca</mat-label>
+            <mat-select formControlName="marca" [(ngModel)]="selectedItem">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let pos of positions" [value]="pos.value">
+                    {{pos.value}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="marca.invalid && marca.errors.required">Debe seleccionar una opcion</mat-error>
+        </mat-form-field>
+        <br>
+
+
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Tipo de Vehiculo</mat-label>
+            <mat-select formControlName="tipoVehiuclo" [(ngModel)]="selectedItemTV">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let tip of tipoVeh" [value]="tip.tipo">
+                    {{tip.tipo}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="tipoVehiuclo.invalid && tipoVehiuclo.errors.required">Debe seleccionar una opcion</mat-error>
+        </mat-form-field>
+        <br>
+
+
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Capacidad</mat-label>
+            <input matInput placeholder="Capacidad" formControlName="capacidad" maxlength="10" />
+            <mat-error *ngIf="capacidad.invalid && capacidad.errors.required">Capacidad requerida</mat-error>
+            <mat-error *ngIf="capacidad.invalid && capacidad.errors.pattern">Capacidad invalida</mat-error>
+        </mat-form-field>
+        <br>
+
+
+        <button mat-fab color="accent" style="float: right" type="submit" [disabled]="formVehiculo.invalid">
+            <mat-icon>save</mat-icon>
+        </button>
+
+        <button mat-fab color="accent" style="float: right" [routerLink]="['/vehiculo']">
+            <mat-icon>backup_table</mat-icon>
+        </button>
+    </form>
+
