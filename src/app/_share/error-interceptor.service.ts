@@ -32,8 +32,17 @@ export class ErrorInterceptorService implements HttpInterceptor {
           this.barraDeProgresoService.progressBarReactiva.next(true);
 
           console.log(err);
-          if(err.error.status === 400 && err.error.message === "----Placa ya se encuentra registrada.") {
-                this.openSnackBar('La placa ya se encuentra registrada');
+          if (err.status === 400 && err.error.error_description === "Bad credentials"){
+
+            this.openSnackBar('Credenciales incorrectas');
+  
+            this.router.navigate(['/login']);
+  
+          }else if (err.status === 401 && err.error.error_description === "----Nick o password incorecto"){
+  
+            this.openSnackBar('Usuario o contraseña incorrecta');
+  
+            this.router.navigate(['/login']);
           } else if(err.error.status == 404) {
                 this.openSnackBar(err.error.message);
           } else if(err.error.status == 405) {

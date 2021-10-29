@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { BarraDeProgresoService} from 'src/app/_service/barra-de-progreso.service'
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { LoginService } from './_service/login.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +12,23 @@ import { BarraDeProgresoService} from 'src/app/_service/barra-de-progreso.servic
 export class AppComponent {
 
   public flagProgressBar: boolean = true;
-  constructor(private barraDeProgresoService: BarraDeProgresoService){}
+  isLoggedIn$: Observable<boolean>;
+
+  constructor(private barraDeProgresoService: BarraDeProgresoService,
+    public route: ActivatedRoute,
+    public logService: LoginService){}
 
   ngOnInit(): void {
 
       this.barraDeProgresoService.progressBarReactiva.subscribe(data =>{
           //this.flagProgressBar = data;  
           this.flagProgressBar = !this.flagProgressBar;
+          this.isLoggedIn$ = this.logService.isLoggedIn;
       });
   
+  }
+
+  onLogout() {
+    this.logService.cerrarSesion();
   }
 }

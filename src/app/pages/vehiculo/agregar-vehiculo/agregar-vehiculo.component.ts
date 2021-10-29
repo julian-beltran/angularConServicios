@@ -19,6 +19,7 @@ export class AgregarVehiculoComponent implements OnInit {
   selectedItem : string;
   selectedItemTV : string;
   positions = [
+
     {value: 'Audi'},
     {value: 'Peugeot'},
     {value: 'Toyota' },
@@ -29,13 +30,16 @@ export class AgregarVehiculoComponent implements OnInit {
     {value: 'Alfa Romeo'},
     {value: 'Ferrari'},
     {value: 'Porche'}
+
   ];
 
   tipoVeh = [
+
     {tipo: 'Carro'},
     {tipo: 'Furgon'},
     {tipo: 'Camioneta'},
     {tipo: 'Campero'}
+
   ]
 
   Vehform = this.fb.group({
@@ -71,10 +75,7 @@ export class AgregarVehiculoComponent implements OnInit {
   Vacio(){
     this.Vehform = new FormGroup({
       'placa': new FormControl('', [Validators.required, Validators.pattern(/[A-Z]{3}[-]\d{3}/)]),
-      'modelo': new FormControl(null, [
-        Validators.required,
-        Validators.min(1900),
-        Validators.max(2022),
+      'modelo': new FormControl(null, [Validators.required,Validators.min(1900),Validators.max(2022),
         Validators.pattern(/\d{4}/)
       ]),
       'marca': new FormControl('', [Validators.required]),

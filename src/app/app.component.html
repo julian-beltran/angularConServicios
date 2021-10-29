@@ -19,11 +19,11 @@
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['/vehiculo']">
+      <button mat-menu-item [routerLink]="['/login']">
         <mat-icon>account_box</mat-icon>
         <span>Mi Perfil</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="onLogout()" *ngIf="isLoggedIn$ | async">
         <mat-icon>exit_to_app</mat-icon>
         <span>Cerrar Sesión</span>
       </button>
