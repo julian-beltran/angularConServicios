@@ -16,6 +16,8 @@ import { NotAllowedComponent } from './pages/not-allowed/not-allowed.component';
 import { LoginComponent } from './pages/login/login.component';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
+import { DepartamentoComponent } from './pages/departamento/departamento.component';
+import { CiudadComponent } from './pages/departamento/ciudad/ciudad.component';
 
 export function tokenGetter() {
   let tk = sessionStorage.getItem(environment.TOKEN_NAME);
@@ -30,7 +32,9 @@ export function tokenGetter() {
     NotFoundComponent,
     NotOkComponent,
     NotAllowedComponent,
-    LoginComponent
+    LoginComponent,
+    DepartamentoComponent,
+    CiudadComponent
   ],
   imports: [
     BrowserModule,

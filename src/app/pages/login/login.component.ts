@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginService } from '../../_service/login.service';
 
@@ -10,6 +11,8 @@ import { LoginService } from '../../_service/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  isLoggedIn$: Observable<boolean>;
 
   // variables de usuario
   usuario: FormControl = new FormControl('',
@@ -41,6 +44,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.usuario.value, this.contrasena.value).subscribe(data => {
       sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
       this.router.navigate(['/vehiculo']);
+      this.loginService.toolBarReactiva.next(false);
     });
 
   }

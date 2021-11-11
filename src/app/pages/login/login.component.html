@@ -16,7 +16,7 @@
           />
           <mat-error *ngIf="usuario.invalid && usuario.errors.required">Usuario requerido</mat-error>
           <mat-error *ngIf="usuario.invalid && usuario.errors.minLength">Mínimo 3 caracteres </mat-error>
-          <mat-error *ngIf="usuario.invalid && usuario.errors.minLength">Máximo 7 caracteres </mat-error>
+          <mat-error *ngIf="usuario.invalid && usuario.errors.minLength">Máximo 8 caracteres </mat-error>
           <mat-error *ngIf="usuario.invalid && usuario.errors.pattern">Solo se aceptan letras y números</mat-error>
         </mat-form-field>
         <br />
@@ -30,12 +30,12 @@
           />
           <mat-error *ngIf="contrasena.invalid && contrasena.errors.required">Contraseña requerida</mat-error>
           <mat-error *ngIf="contrasena.invalid && contrasena.errors.minLength">Mínimo 3 caracteres </mat-error>
-          <mat-error *ngIf="contrasena.invalid && contrasena.errors.minLength">Máximo 15 caracteres </mat-error>
+          <mat-error *ngIf="contrasena.invalid && contrasena.errors.minLength">Máximo 8 caracteres </mat-error>
           <mat-error *ngIf="contrasena.invalid && contrasena.errors.pattern">Solo se aceptan letras y números</mat-error>
         </mat-form-field>
   
         <button mat-menu-item (click)="login()" color="accent" [disabled]="!usuario.valid && !contrasena.valid">
-                   Ingresar
+          Ingresar
         </button>
       </mat-card-content>
     </mat-card>

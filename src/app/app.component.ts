@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BarraDeProgresoService} from 'src/app/_service/barra-de-progreso.service'
-import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { LoginService } from './_service/login.service';
 
 @Component({
@@ -9,26 +7,34 @@ import { LoginService } from './_service/login.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   public flagProgressBar: boolean = true;
-  isLoggedIn$: Observable<boolean>;
+  public flagToolbar: boolean = true;
 
   constructor(private barraDeProgresoService: BarraDeProgresoService,
-    public route: ActivatedRoute,
-    public logService: LoginService){}
+    public loginService: LoginService){}
 
   ngOnInit(): void {
 
-      this.barraDeProgresoService.progressBarReactiva.subscribe(data =>{
-          //this.flagProgressBar = data;  
-          this.flagProgressBar = !this.flagProgressBar;
-          this.isLoggedIn$ = this.logService.isLoggedIn;
-      });
-  
+    if(this.loginService.estaLogueado() == true) {
+      this.flagToolbar = false;
+  } else {
+      this.flagToolbar = true;
   }
 
-  onLogout() {
-    this.logService.cerrarSesion();
-  }
+  this.loginService.toolBarReactiva.subscribe(data =>{
+    this.flagToolbar = data;
+  });
+
+  this.barraDeProgresoService.progressBarReactiva.subscribe(data =>{
+      this.flagProgressBar = data;  
+      
+  });
+
+}
+
+onLogout() {
+this.loginService.cerrarSesion();
+}
 }

@@ -23,26 +23,28 @@ export class ErrorInterceptorService implements HttpInterceptor {
       if (event instanceof HttpResponse) {
         if (event.body && event.body.error === true && event.body.errorMessage) {
           throw new Error(event.body.errorMessage);
-        }/*else{
-            this.snackBar.open("EXITO", 'AVISO', { duration: 5000 });    
-        }*/
+        }
       }
     })).pipe(catchError((err) => {
 
           this.barraDeProgresoService.progressBarReactiva.next(true);
 
           console.log(err);
-          if (err.status === 400 && err.error.error_description === "Bad credentials"){
 
-            this.openSnackBar('Credenciales incorrectas');
+          if (err.status === 400 && err.error.error_description === "Bad credentials"){
+            this.openSnackBar('contraseña incorrecta');
   
             this.router.navigate(['/login']);
   
-          }else if (err.status === 401 && err.error.error_description === "----Nick o password incorecto"){
-  
-            this.openSnackBar('Usuario o contraseña incorrecta');
-  
+          } else if (err.status === 401 && err.error.error_description === "----Nick o password incorecto"){
+            this.openSnackBar('Usuario incorrecto');
+
             this.router.navigate(['/login']);
+          } else if (err.error.status === 400 && err.error.message === "----Placa ya se encuentra registrada.") {
+            this.openSnackBar('Placa ya se encuentra registrada');
+            
+          } else if(err.status == 401) {
+                this.router.navigate(['/nopermiso']);
           } else if(err.error.status == 404) {
                 this.openSnackBar(err.error.message);
           } else if(err.error.status == 405) {
