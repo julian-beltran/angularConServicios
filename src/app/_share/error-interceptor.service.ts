@@ -36,15 +36,26 @@ export class ErrorInterceptorService implements HttpInterceptor {
   
             this.router.navigate(['/login']);
   
-          } else if (err.status === 401 && err.error.error_description === "----Nick o password incorecto"){
-            this.openSnackBar('Usuario incorrecto');
+          } else if (err.status === 401){
 
-            this.router.navigate(['/login']);
+            if (err.error.message === 'No estas autorizado para acceder a este recurso')
+            {
+              this.openSnackBar(err.error.message);
+              this.router.navigate(['/nopermiso']);
+            } else {
+              
+              this.openSnackBar('Nick o usuario inválido');
+            }    
+            if (err.error.error === 'invalid_token'){
+              sessionStorage.clear();
+              this.router.navigate(['/nopermiso']);
+              this.openSnackBar('Token inválido');
+            }
+
+
           } else if (err.error.status === 400 && err.error.message === "----Placa ya se encuentra registrada.") {
             this.openSnackBar('Placa ya se encuentra registrada');
             
-          } else if(err.status == 401) {
-                this.router.navigate(['/nopermiso']);
           } else if(err.error.status == 404) {
                 this.openSnackBar(err.error.message);
           } else if(err.error.status == 405) {

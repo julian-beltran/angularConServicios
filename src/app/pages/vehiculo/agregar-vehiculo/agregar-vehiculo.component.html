@@ -1,5 +1,7 @@
 
     <form [formGroup]="Vehform" #formVehiculo="ngForm" (ngSubmit)="guardar()" class="container">
+        <h2 class="center">Registrar vehiculo</h2>
+        <br>
         <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Placa</mat-label>
             <input matInput placeholder="Placa" formControlName="placa" maxlength="7" oninput="this.value = this.value.toUpperCase()"/>

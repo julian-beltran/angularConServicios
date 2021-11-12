@@ -10,6 +10,10 @@ import { NotOkComponent } from './pages/not-ok/not-ok.component';
 import { NotAllowedComponent } from './pages/not-allowed/not-allowed.component';
 import { LoginComponent } from './pages/login/login.component';
 import { GuardianService } from './_share/guardian.service';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { RegistrarusuarioComponent } from './pages/usuario/registrarusuario/registrarusuario.component';
+import { ConductorComponent } from './pages/conductor/conductor.component';
+import { BuscarComponent } from './pages/buscar/buscar.component';
 
 
 const routes: Routes = [
@@ -24,6 +28,14 @@ const routes: Routes = [
         {path: 'editar/:idVehiculo', component: AgregarVehiculoComponent, canActivate: [GuardianService]}
   ], canActivate: [GuardianService]
 },
+{ path: 'usuario', component: UsuarioComponent, canActivate: [GuardianService] , children:
+[
+  { path: 'registrarusuario', component: RegistrarusuarioComponent, canActivate: [GuardianService]},
+]
+},
+{ path: 'conductor', component: ConductorComponent, canActivate: [GuardianService] },
+{ path: 'buscar', component: BuscarComponent, canActivate: [GuardianService] },
+
   {path: 'login', component:LoginComponent},
   {path: 'nopermiso', component:NotAllowedComponent},
   {path: 'error', component:NotOkComponent},

@@ -18,6 +18,10 @@ import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DepartamentoComponent } from './pages/departamento/departamento.component';
 import { CiudadComponent } from './pages/departamento/ciudad/ciudad.component';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { RegistrarusuarioComponent } from './pages/usuario/registrarusuario/registrarusuario.component';
+import { ConductorComponent } from './pages/conductor/conductor.component';
+import { BuscarComponent } from './pages/buscar/buscar.component';
 
 export function tokenGetter() {
   let tk = sessionStorage.getItem(environment.TOKEN_NAME);
@@ -34,7 +38,11 @@ export function tokenGetter() {
     NotAllowedComponent,
     LoginComponent,
     DepartamentoComponent,
-    CiudadComponent
+    CiudadComponent,
+    UsuarioComponent,
+    RegistrarusuarioComponent,
+    ConductorComponent,
+    BuscarComponent
   ],
   imports: [
     BrowserModule,

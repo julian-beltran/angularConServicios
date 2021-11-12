@@ -56,6 +56,26 @@
       </button>
       <mat-divider></mat-divider>
 
+      <mat-divider></mat-divider>
+      
+      <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/usuario']">
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Usuario</span>
+      </button>
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/conductor']">
+        <mat-icon>directions_car</mat-icon>
+        <span>conductor</span>
+      </button>
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/buscar']">
+        <mat-icon>search</mat-icon>
+        <span>buscar</span>
+      </button>
+      <mat-divider></mat-divider>
+
     </mat-drawer>
 
     <div class="example-sidenav-content">
