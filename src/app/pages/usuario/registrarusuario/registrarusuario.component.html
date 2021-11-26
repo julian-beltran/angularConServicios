@@ -23,7 +23,7 @@
 
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Ej:Pepe" formControlName="nombre" (input)="inputValidator($event)">
+            <input matInput placeholder="minimo 3 caracteres" formControlName="nombre" (input)="inputValidator($event)">
         </mat-form-field>
         <div *ngIf="form.get('nombre').errors && form.get('nombre').touched">
             <mat-error *ngIf="form.get('nombre').hasError('required')">
@@ -41,7 +41,7 @@
 
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Apellido</mat-label>
-            <input matInput placeholder="Ej:Grillo" formControlName="apellido" (input)="inputValidator($event)">
+            <input matInput placeholder="" formControlName="apellido" (input)="inputValidator($event)">
         </mat-form-field>
         <div *ngIf="form.get('apellido').errors && form.get('apellido').touched">
             <mat-error *ngIf="form.get('apellido').hasError('required')">
@@ -59,7 +59,7 @@
 
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Nickname</mat-label>
-            <input matInput placeholder="Ej:PepeTheOG_92" formControlName="nick">
+            <input matInput placeholder="" formControlName="nick">
         </mat-form-field>
         <div *ngIf="form.get('nick').errors && form.get('nick').touched">
             <mat-error *ngIf="form.get('nick').hasError('required')">
@@ -89,7 +89,7 @@
 
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Dirección</mat-label>
-            <input matInput placeholder="Ej:Carrera 6#12 - 20" formControlName="direccion">
+            <input matInput placeholder="" formControlName="direccion">
         </mat-form-field>
         <div *ngIf="form.get('direccion').errors && form.get('direccion').touched">
             <mat-error *ngIf="form.get('direccion').hasError('required')">
@@ -140,7 +140,7 @@
 
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Correo</mat-label>
-            <input matInput placeholder="Ej:pep@gmail.com" formControlName="correo">
+            <input matInput placeholder="" formControlName="correo">
         </mat-form-field>
         <div *ngIf="form.get('correo').errors && form.get('correo').touched">
             <mat-error *ngIf="form.get('correo').hasError('required')">

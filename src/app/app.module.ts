@@ -22,6 +22,10 @@ import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { RegistrarusuarioComponent } from './pages/usuario/registrarusuario/registrarusuario.component';
 import { ConductorComponent } from './pages/conductor/conductor.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
+import { IndexComponent } from './pages/index/index.component';
+import { EditarUsuarioComponent } from './pages/usuario/editar-usuario/editar-usuario.component';
+import { ConfirmacionDialogComponent } from './pages/confirmacion-dialog/confirmacion-dialog.component';
+
 
 export function tokenGetter() {
   let tk = sessionStorage.getItem(environment.TOKEN_NAME);
@@ -42,7 +46,11 @@ export function tokenGetter() {
     UsuarioComponent,
     RegistrarusuarioComponent,
     ConductorComponent,
-    BuscarComponent
+    BuscarComponent,
+    IndexComponent,
+    EditarUsuarioComponent,
+    ConfirmacionDialogComponent,
+
   ],
   imports: [
     BrowserModule,

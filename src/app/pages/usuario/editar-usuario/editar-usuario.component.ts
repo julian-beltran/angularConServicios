@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Ciudad } from 'src/app/_model/Ciudad';
 import { Departamento } from 'src/app/_model/Departamento';
 import { Usuario } from 'src/app/_model/usuario';
@@ -13,15 +13,12 @@ import { DepartamentoService } from 'src/app/_service/departamento.service';
 import { ErrorInterceptorService } from 'src/app/_share/error-interceptor.service';
 import { UsuarioComponent } from '../usuario.component';
 
-
 @Component({
-  selector: 'app-registrarusuario',
-  templateUrl: './registrarusuario.component.html',
-  styleUrls: ['./registrarusuario.component.css']
+  selector: 'app-editar-usuario',
+  templateUrl: './editar-usuario.component.html',
+  styleUrls: ['./editar-usuario.component.css']
 })
-export class RegistrarusuarioComponent implements OnInit {
-
-
+export class EditarUsuarioComponent implements OnInit {
   public deptSelected: string;
 
   public citySelected: string;
@@ -31,14 +28,15 @@ export class RegistrarusuarioComponent implements OnInit {
 
   public deptList: Departamento[] = [];
   public cityList: Ciudad[] = [];
-  dataSource = new MatTableDataSource([]);
+  
 
   @ViewChild('categoryPaginator') categoryPaginator: MatPaginator;
 
   form: FormGroup;
+  public userInfo: any;
 
   constructor(private user: ConductorService, private formBuilder: FormBuilder, private _snackBar: MatSnackBar,
-              private router: Router, public errorInterceptor: ErrorInterceptorService,
+              private router: Router, public errorInterceptor: ErrorInterceptorService,private route: ActivatedRoute,
               private barraProgresoService: BarraDeProgresoService, public dept: DepartamentoService, private User: ConductorService,
               private updtUserList: UsuarioComponent) {
                 this.buildForm();
@@ -46,27 +44,39 @@ export class RegistrarusuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.deptList = [];
-    this.dept.listar().subscribe((data: any[]) => {
-      data.forEach(element => {
-        this.deptList.push({idDepartamento: element.idDepartamento, nombre: element.nombre});
-      });
-      console.log(this.deptList);
-      this.dataSource.data = this.deptList;
-      this.dataSource.paginator = this.categoryPaginator;
+    this.route.params.subscribe((params:Params)=>{
+      const idUsuario =params.idUsuario;
+      this.loadUserInfo(idUsuario);
+    });
+    this.loadDept();
+  }
+
+
+  private loadUserInfo(idUsuario: number): void{
+    this.user.getUserById(idUsuario).subscribe(data => {
+      this.userInfo = data;
+
+      console.log(this.userInfo);
     });
   }
 
-  insertUser(event: Event): void{
+  public editUser(event: Event): void{
     event.preventDefault();
 
     const user: Usuario = new Usuario();
 
-    user.documento = this.form.value.documento;
+    if (this.form.value.clave === ''){
+      user.clave = this.userInfo.clave;
+    }else{
+      user.clave = this.form.value.clave;
+    }
+
+    user.idUsuario = this.userInfo.idUsuario;
+    user.documento = this.userInfo.documento;
     user.nombre = this.form.value.nombre;
     user.apellido = this.form.value.apellido;
     user.nick = this.form.value.nick;
-    user.clave = this.form.value.clave;
-    user.direccion = this.form.value.clave;
+    user.direccion = this.form.value.direccion;
     user.celular = this.form.value.celular;
     user.celularAux = this.form.value.celularAux;
     user.correo = this.form.value.correo;
@@ -82,27 +92,15 @@ export class RegistrarusuarioComponent implements OnInit {
 
     if (this.form.valid){
       console.log(user);
-
-      this.User.insertUser(user).subscribe(success => {
-        console.log('registrado con éxito');
-        this.updtUserList.loadUserInfo();
+      this.user.editUser(user).subscribe(data => {
+        this.updtUserList.listUsers();
         this.router.navigate(['/usuario']);
       });
     }else{
       this.form.markAllAsTouched();
     }
   }
-
-  public loadCities(value): void{
-    this.cityList = [];
-    console.log(value);
-    this.dept.listarCiudadPorDepartamento(value).subscribe(data => {
-      data.forEach(element => {
-        this.cityList.push({idCiudad: element.idCiudad, nombre: element.nombre, departamento: element.departamento});
-      });
-    });
-  }
-
+  
   private buildForm(): void{
     this.form = this.formBuilder.group(
       {
@@ -119,6 +117,25 @@ export class RegistrarusuarioComponent implements OnInit {
         ciudad: ['', [Validators.required]]
       });
   }
+  public loadCities(value): void{
+    this.cityList = [];
+    console.log(value);
+    this.dept.listarCiudadPorDepartamento(value).subscribe(data => {
+      data.forEach(element => {
+        this.cityList.push({idCiudad: element.idCiudad, nombre: element.nombre, departamento: element.departamento});
+      });
+    });
+  }
+  
+  public loadDept(): void{
+    this.dept.listar().subscribe((data: any[]) => {
+      data.forEach(element => {
+        this.deptList.push({idDepartamento: element.idDepartamento, nombre: element.nombre});
+      });
+      console.log(this.deptList);
+    });
+  }
+  
 
   public inputValidator(event: any): void {
     const pattern = /^[a-zA-Z]*$/;

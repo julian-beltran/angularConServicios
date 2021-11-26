@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     // 'admin'    '123456'
     this.loginService.login(this.usuario.value, this.contrasena.value).subscribe(data => {
       sessionStorage.setItem(environment.TOKEN_NAME, data.access_token);
-      this.router.navigate(['/vehiculo']);
+      this.router.navigate(['/index']);
       this.loginService.toolBarReactiva.next(false);
     });
 

@@ -14,11 +14,14 @@ import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { RegistrarusuarioComponent } from './pages/usuario/registrarusuario/registrarusuario.component';
 import { ConductorComponent } from './pages/conductor/conductor.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
+import { IndexComponent } from './pages/index/index.component';
+import { EditarUsuarioComponent } from './pages/usuario/editar-usuario/editar-usuario.component';
 
 
 const routes: Routes = [
 
-  {path: '', component:LoginComponent},
+  { path: '', component: LoginComponent},
+  { path: 'index', component: IndexComponent},
   {path: 'departamento', component: DepartamentoComponent, children:[
         {path:'ciudad/:idDep', component: CiudadComponent, canActivate:[GuardianService]}
   ], canActivate: [GuardianService]
@@ -31,8 +34,9 @@ const routes: Routes = [
 { path: 'usuario', component: UsuarioComponent, canActivate: [GuardianService] , children:
 [
   { path: 'registrarusuario', component: RegistrarusuarioComponent, canActivate: [GuardianService]},
-]
-},
+  { path: 'editarusuario/:idUsuario', component: EditarUsuarioComponent, canActivate: [GuardianService]}
+  
+]},
 { path: 'conductor', component: ConductorComponent, canActivate: [GuardianService] },
 { path: 'buscar', component: BuscarComponent, canActivate: [GuardianService] },
 

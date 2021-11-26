@@ -61,4 +61,16 @@ export class ConductorService {
     );
   }
 
+  public getUserById(idUsuario: number): any{
+    return this.http.get(`${this.url}/listar/${idUsuario}`);
+  }
+
+  public editUser(user: Usuario): any{
+    return this.http.put(`${this.url}/editar`, user);
+  }
+
+  public deleteUser(idUsuario: number): any{
+    return this.http.delete(`${this.url}/eliminar/${idUsuario}`);
+  }
+
 }

@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { BarraDeProgresoService } from 'src/app/_service/barra-de-progreso.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmacionDialogComponent } from '../confirmacion-dialog/confirmacion-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-usuario',
@@ -23,8 +25,10 @@ export class UsuarioComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('userPaginator') userPaginator: MatPaginator;
 
+  dialogRef: MatDialogRef<ConfirmacionDialogComponent>;
+
   pageEvent: PageEvent;
-  displayedColumns: string[] = ['nombre', 'apellido', 'nick', 'documento', 'correo', 'rol', 'ciudad', 'ciudad2'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'nick', 'documento', 'correo', 'rol', 'ciudad', 'ciudad2','editar','eliminar'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
 
   dataSource: UserInfo;
@@ -33,7 +37,8 @@ export class UsuarioComponent implements OnInit {
   constructor(private userServ: ConductorService,
               public route: ActivatedRoute,
               private barraProgresoService: BarraDeProgresoService,
-              private snackBar: MatSnackBar,) { }
+              private snackBar: MatSnackBar,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadUserInfo();
@@ -56,6 +61,37 @@ export class UsuarioComponent implements OnInit {
       this.userList.sort = this.sort;
       this.barraProgresoService.progressBarReactiva.next(true);
       
+    });
+  }
+  
+  public deleteUser(idUsuario: number): void{
+    console.log(idUsuario);
+
+    this.dialogRef = this.dialog.open(ConfirmacionDialogComponent, {
+      disableClose: false
+    });
+
+    this.dialogRef.componentInstance.confirmMessage = '¿Eliminar el usuario?';
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userServ.deleteUser(idUsuario).subscribe(data => {
+          console.log('Usuario eliminado');
+          this.loadUserInfo();
+        });
+      }
+
+      this.dialogRef = null;
+    });
+
+  }
+
+  public listUsers(): void{
+    this.userServ.getUsers(this.pageIndex, this.pageSize).pipe(
+      map((uInfo: UserInfo) => this.dataSource = uInfo)
+    ).subscribe(data => {
+      this.userList = new MatTableDataSource(data.content);
+      this.userList.sort = this.sort;
     });
   }
   private openSnackBar(mensaje: string) {

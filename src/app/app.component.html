@@ -43,38 +43,53 @@
 
       <img src="assets/colombia-si.png" width="128" style="margin-left: 20px;" />
       <mat-divider></mat-divider>
+
+      <ng-container *ngIf="this.loginService.estaLogueado() && this.loginService.rolType() == 'Administrador'">
       <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/departamento']">
         <mat-icon>room</mat-icon>
         <span>Departamento</span>
       </button>
+    </ng-container>
 
       <mat-divider></mat-divider>
-      
+      <ng-container *ngIf="this.loginService.estaLogueado() && this.loginService.rolType() == 'Administrador'">
       <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/vehiculo']">
         <mat-icon>commute</mat-icon>
         <span>Vehiculo</span>
       </button>
+    </ng-container>
       <mat-divider></mat-divider>
 
-      <mat-divider></mat-divider>
-      
+      <ng-container *ngIf="this.loginService.estaLogueado() && this.loginService.rolType() == 'Administrador'">
       <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/usuario']">
         <mat-icon>manage_accounts</mat-icon>
         <span>Usuario</span>
       </button>
+    </ng-container>
       <mat-divider></mat-divider>
 
+      <ng-container *ngIf="this.loginService.estaLogueado() && this.loginService.rolType() == 'Conductor'">
       <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/conductor']">
         <mat-icon>directions_car</mat-icon>
         <span>conductor</span>
       </button>
+    </ng-container>
       <mat-divider></mat-divider>
 
+      <ng-container *ngIf="this.loginService.estaLogueado() && this.loginService.rolType() == 'Conductor'">
       <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/buscar']">
         <mat-icon>search</mat-icon>
         <span>buscar</span>
       </button>
+    </ng-container>
       <mat-divider></mat-divider>
+      
+        <button mat-menu-item (click)="drawer.toggle()" style="cursor: pointer" [routerLink]="['/index']">
+          <mat-icon>search</mat-icon>
+          <span>index</span>
+        </button>
+      
+        <mat-divider></mat-divider>
 
     </mat-drawer>
 
